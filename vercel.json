@@ -1,9 +1,10 @@
 {
   "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
   "outputDirectory": "frontend/build",
+  "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/(.*)",
+      "source": "/((?!robots.txt|llms.txt|sitemap.xml|favicon.ico|_next/|static/|api/).*)",
       "destination": "/index.html"
     }
   ]

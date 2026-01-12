@@ -1,0 +1,31 @@
+# Mevoq Pharmaceutical Consulting
+> https://maglinc.vercel.app/
+
+Expert pharmaceutical consulting that accelerates regulatory approvals and ensures compliance.
+
+## Services
+- Regulatory Strategy & Planning
+- Regulatory Documentation  
+- Quality & Compliance
+- Medical & Scientific Writing
+- Risk Management
+- Administrative Support
+
+Key capabilities: FDA approval, EMA submissions, Health Canada regulatory consulting, IND/NDA/BLA preparation
+
+## Pages
+
+> https://maglinc.vercel.app/
+Homepage - Overview of regulatory consulting services
+
+> https://maglinc.vercel.app/about
+About - Team of former FDA reviewers and regulatory affairs professionals
+
+> https://maglinc.vercel.app/services
+Services - Detailed regulatory consulting offerings
+
+> https://maglinc.vercel.app/blog
+Blog - Industry insights on regulatory changes and compliance
+
+## Contact
+Email: contact@mevoq.com
