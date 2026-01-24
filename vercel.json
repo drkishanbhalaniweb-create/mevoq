@@ -1,11 +1,5 @@
 {
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "frontend/build",
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/((?!robots.txt|llms.txt|sitemap.xml|favicon.ico|_next/|static/|api/).*)",
-      "destination": "/index.html"
-    }
-  ]
+  "framework": "nextjs",
+  "buildCommand": "cd mevoq-nextjs && npm install && npm run build",
+  "outputDirectory": "mevoq-nextjs/.next"
 }

@@ -8,34 +8,42 @@ module.exports = {
     // Dynamic paths will be added here via additionalPaths
     additionalPaths: async (config) => {
         const result = [];
+        const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+        const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
 
-        try {
-            // Import Supabase client
-            const { createClient } = require('@supabase/supabase-js');
-            const supabase = createClient(
-                process.env.NEXT_PUBLIC_SUPABASE_URL,
-                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-            );
+        if (supabaseUrl && supabaseKey) {
+            try {
+                // Fetch published blog posts via REST API to avoid @supabase/supabase-js dependency
+                // Endpoint: /rest/v1/blog_posts?select=slug,updated_at&published=eq.true
+                const response = await fetch(
+                    `${supabaseUrl}/rest/v1/blog_posts?select=slug,updated_at&published=eq.true`,
+                    {
+                        headers: {
+                            'apikey': supabaseKey,
+                            'Authorization': `Bearer ${supabaseKey}`
+                        }
+                    }
+                );
 
-            // Fetch published blog posts
-            const { data: posts, error } = await supabase
-                .from('blog_posts')
-                .select('slug, updated_at')
-                .eq('published', true);
-
-            if (!error && posts) {
-                posts.forEach((post) => {
-                    result.push({
-                        loc: `/blog/${post.slug}`,
-                        lastmod: post.updated_at || new Date().toISOString(),
-                        changefreq: 'weekly',
-                        priority: 0.8,
-                    });
-                });
+                if (response.ok) {
+                    const posts = await response.json();
+                    if (Array.isArray(posts)) {
+                        posts.forEach((post) => {
+                            result.push({
+                                loc: `/blog/${post.slug}`,
+                                lastmod: post.updated_at || new Date().toISOString(),
+                                changefreq: 'weekly',
+                                priority: 0.8,
+                            });
+                        });
+                    }
+                } else {
+                    console.warn('Sitemap fetch failed:', response.statusText);
+                }
+            } catch (error) {
+                console.warn('Could not fetch blog posts for sitemap:', error.message);
+                // Fail gracefully - static pages will still be in sitemap
             }
-        } catch (error) {
-            console.warn('Could not fetch blog posts for sitemap:', error.message);
-            // Fail gracefully - static pages will still be in sitemap
         }
 
         return result;

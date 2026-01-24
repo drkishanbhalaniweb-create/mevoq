@@ -1,24 +1,61 @@
-import { createClient } from '@supabase/supabase-js';
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
+import { cache } from 'react';
 import { mockBlogPosts, mockServices, mockTestimonials, mockTeam, mockStats } from './mock-data';
 
-// Initialize Supabase client
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+// 1. Singleton Public Client (No cookies/auth session required, supports SSG)
+const publicClient = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    {
+        cookies: {
+            getAll() { return []; },
+            setAll(cookiesToSet) { },
+        },
+    }
+);
 
-// Only create client if environment variables are available
-export const supabase = supabaseUrl && supabaseKey
-    ? createClient(supabaseUrl, supabaseKey)
-    : null;
+// Client for User Actions (Requires cookies, opts into Dynamic Rendering)
+// Use this if you need to respect RLS policies based on the logged-in user
+const createSessionClient = async () => {
+    const cookieStore = await cookies();
 
-// Stats
-export const getStats = () => {
-    return mockStats;
+    return createServerClient(
+        process.env.NEXT_PUBLIC_SUPABASE_URL,
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        {
+            cookies: {
+                getAll() {
+                    return cookieStore.getAll();
+                },
+                setAll(cookiesToSet) {
+                    try {
+                        cookiesToSet.forEach(({ name, value, options }) =>
+                            cookieStore.set(name, value, options)
+                        );
+                    } catch (error) {
+                        // Ignored in Server Components
+                    }
+                },
+            },
+        }
+    );
 };
 
+// Check if credentials exist
+const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+// Stats
+export const getStats = cache(() => {
+    return mockStats;
+});
+
 // Testimonials
-export const getTestimonials = async () => {
-    if (supabase) {
+export const getTestimonials = cache(async () => {
+    if (isConfigured) {
         try {
+            // Using public client for static content queries to enable SSG
+            const supabase = createPublicClient();
             const { data, error } = await supabase
                 .from('testimonials')
                 .select('*');
@@ -30,17 +67,17 @@ export const getTestimonials = async () => {
                 return data;
             }
         } catch (error) {
-            console.warn('⚠️ Supabase unavailable, using mock testimonials:', error.message);
+            console.warn('⚠️ Supabase unavailable/error, using mock testimonials:', error.message);
         }
     }
-
     return mockTestimonials;
-};
+});
 
 // Services
-export const getServices = async () => {
-    if (supabase) {
+export const getServices = cache(async () => {
+    if (isConfigured) {
         try {
+            const supabase = publicClient;
             const { data, error } = await supabase
                 .from('services')
                 .select('*');
@@ -52,17 +89,17 @@ export const getServices = async () => {
                 return data;
             }
         } catch (error) {
-            console.warn('⚠️ Supabase unavailable, using mock services:', error.message);
+            console.warn('⚠️ Supabase unavailable/error, using mock services:', error.message);
         }
     }
-
     return mockServices;
-};
+});
 
 // Team
-export const getTeam = async () => {
-    if (supabase) {
+export const getTeam = cache(async () => {
+    if (isConfigured) {
         try {
+            const supabase = publicClient;
             const { data, error } = await supabase
                 .from('team')
                 .select('*');
@@ -74,17 +111,17 @@ export const getTeam = async () => {
                 return data;
             }
         } catch (error) {
-            console.warn('⚠️ Supabase unavailable, using mock team:', error.message);
+            console.warn('⚠️ Supabase unavailable/error, using mock team:', error.message);
         }
     }
-
     return mockTeam;
-};
+});
 
 // Blog Posts
-export const getBlogPosts = async (publishedOnly = true) => {
-    if (supabase) {
+export const getBlogPosts = cache(async (publishedOnly = true) => {
+    if (isConfigured) {
         try {
+            const supabase = publicClient;
             let query = supabase
                 .from('blog_posts')
                 .select('*')
@@ -103,16 +140,16 @@ export const getBlogPosts = async (publishedOnly = true) => {
                 return data;
             }
         } catch (error) {
-            console.warn('⚠️ Supabase unavailable, using mock blog posts:', error.message);
+            console.warn('⚠️ Supabase unavailable/error, using mock blog posts:', error.message);
         }
     }
-
     return mockBlogPosts;
-};
+});
 
-export const getBlogPost = async (slug) => {
-    if (supabase) {
+export const getBlogPost = cache(async (slug) => {
+    if (isConfigured) {
         try {
+            const supabase = publicClient;
             const { data, error } = await supabase
                 .from('blog_posts')
                 .select('*')
@@ -127,19 +164,21 @@ export const getBlogPost = async (slug) => {
                 return data;
             }
         } catch (error) {
-            console.warn('⚠️ Supabase unavailable, using mock blog post:', error.message);
+            console.warn('⚠️ Supabase unavailable/error, using mock blog post:', error.message);
         }
     }
 
     // Find in mock data
     const mockPost = mockBlogPosts.find(p => p.slug === slug);
     return mockPost || null;
-};
+});
 
 // Contacts
+// Using public client for submission (assumes public insert access)
 export const submitContact = async (contactData) => {
-    if (supabase) {
+    if (isConfigured) {
         try {
+            const supabase = publicClient;
             const { data, error } = await supabase
                 .from('contacts')
                 .insert([{

@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+// Tailwind CSS Configuration
+
 module.exports = {
     darkMode: ["class"],
     // Optimize for JIT compilation by targeting specific paths
@@ -9,47 +10,51 @@ module.exports = {
     ],
     theme: {
         extend: {
-            // PROMPT: Matches existing color scheme: primary blue #0052CC, navy backgrounds
+            // PROMPT: Global Color System Reboot (Clinical/High-Contrast)
             colors: {
-                // Primary Colors (Matches frontend/tailwind.config.js)
+                // Backgrounds
+                white: '#F8FAFC', // Slate 50 (Clinical Off-White)
+                pure: '#FFFFFF',  // Absolute White
+
+                // Primary Colors
                 primary: {
-                    DEFAULT: '#0052CC',
-                    dark: '#003BA3',
-                    darker: '#00274D',
-                    light: '#E3F2FD',
-                    navy: '#001F3F', // Navy Background
-                    blue: '#0052CC',
-                    teal: '#1DD1A1',
+                    DEFAULT: '#020617', // Slate 950 (Ink)
+                    dark: '#000000',
+                    darker: '#020617',
+                    light: '#E2E8F0',
+                    navy: '#000000',    // Pure Ink (Hero Text Authority)
+                    blue: '#0F172A',    // Midnight Navy (Professional CTA)
+                    teal: '#0D9488',    // Signal Teal (Darker/Sharper)
                 },
                 // Accent Colors
                 accent: {
-                    DEFAULT: '#1DD1A1',
-                    dark: '#0FA361',
-                    light: '#E8FDF5',
+                    DEFAULT: '#0D9488', // Teal 600
+                    dark: '#0F766E',
+                    light: '#CCFBF1',
                 },
                 // Semantic Colors
                 success: {
-                    DEFAULT: '#4CAF50',
-                    green: '#4CAF50',
+                    DEFAULT: '#059669', // Emerald 600
+                    green: '#059669',
                 },
                 warning: {
-                    DEFAULT: '#FF9800',
+                    DEFAULT: '#D97706', // Amber 600
                 },
                 error: {
-                    DEFAULT: '#F44336',
+                    DEFAULT: '#DC2626', // Red 600
                 },
-                // Gray Scale
+                // Gray Scale (Slate - Cool/Clinical)
                 gray: {
-                    50: '#F9FAFB',
-                    100: '#F5F5F5',
-                    200: '#EBEBEB',
-                    300: '#CCCCCC',
-                    400: '#999999',
-                    500: '#666666',
-                    600: '#4B5563',
-                    700: '#333333',
-                    800: '#1A1A1A',
-                    900: '#111827',
+                    50: '#F8FAFC',
+                    100: '#F1F5F9',
+                    200: '#E2E8F0',
+                    300: '#CBD5E1',
+                    400: '#94A3B8',
+                    500: '#64748B', // Body Text (Soft Gray)
+                    600: '#475569',
+                    700: '#334155',
+                    800: '#1E293B',
+                    900: '#0F172A',
                 },
                 // Shadcn/ui & Radix Colors
                 background: 'hsl(var(--background))',
@@ -99,17 +104,18 @@ module.exports = {
             },
             // Box Shadow
             boxShadow: {
-                'sm': '0 2px 4px rgba(0, 0, 0, 0.05)',
-                'md': '0 2px 8px rgba(0, 0, 0, 0.08)',
-                'lg': '0 4px 12px rgba(0, 0, 0, 0.15)',
-                'xl': '0 8px 24px rgba(0, 0, 0, 0.12)',
-                '2xl': '0 12px 32px rgba(0, 0, 0, 0.16)',
-                'primary': '0 4px 14px rgba(0, 82, 204, 0.25)',
-                'accent': '0 4px 14px rgba(29, 209, 161, 0.25)',
+                'sm': '0 1px 2px rgba(0, 0, 0, 0.05)',
+                'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+                'xl': '0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)',
+                '2xl': '0 25px 50px -12px rgba(0, 0, 0, 0.25)',
+                'primary': '0 4px 14px rgba(2, 6, 23, 0.25)', // Ink Shadow
+                'accent': '0 4px 14px rgba(13, 148, 136, 0.25)', // Teal Shadow
             },
             // Font Family: Preserves Inter font setup
             fontFamily: {
-                sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'Segoe UI', 'Roboto', 'sans-serif'],
+                sans: ['var(--font-inter)', 'sans-serif'],
+                serif: ['var(--font-source-serif)', 'serif'],
             },
             // Container
             container: {
@@ -170,6 +176,7 @@ module.exports = {
                 'slide-in-right': 'slide-in-right 0.6s ease-out forwards',
                 'scale-in': 'scale-in 0.5s ease-out forwards',
                 'shimmer': 'shimmer 1.5s ease-in-out infinite',
+                'spin-slow': 'spin 60s linear infinite',
             },
         }
     },

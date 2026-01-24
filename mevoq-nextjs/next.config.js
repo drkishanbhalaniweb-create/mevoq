@@ -7,7 +7,11 @@ const nextConfig = {
         remotePatterns: [
             {
                 protocol: 'https',
-                hostname: 'vjllbclvywghrhlcpapa.supabase.co', // Allow Supabase Storage
+                hostname: 'scnomhsoweqblursbeul.supabase.co', // Current Supabase Storage
+            },
+            {
+                protocol: 'https',
+                hostname: 'vjllbclvywghrhlcpapa.supabase.co', // Legacy/Alternative Supabase Storage
             },
             {
                 protocol: 'https',

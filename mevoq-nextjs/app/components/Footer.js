@@ -1,64 +1,97 @@
+import Link from 'next/link';
+import { Mail, MapPin, Phone } from 'lucide-react';
+
 export default function Footer() {
     const currentYear = new Date().getFullYear();
 
     return (
-        <footer className="bg-primary-navy text-white pt-16 pb-8 border-t border-gray-800">
-            <div className="container mx-auto px-4 lg:px-6">
-                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+        <footer className="relative min-h-[90vh] flex flex-col justify-end bg-[#EBF0F5] text-primary-navy shadow-[inset_0_20px_50px_rgba(0,0,0,0.02)]">
 
-                    {/* Company Info */}
-                    <div className="col-span-1 md:col-span-1">
-                        <div className="flex items-center gap-2 mb-4">
-                            <div className="w-8 h-8 bg-primary rounded flex items-center justify-center">
-                                <span className="text-white font-bold">M</span>
-                            </div>
-                            <span className="text-xl font-bold">Mevoq.</span>
-                        </div>
-                        <p className="text-gray-400 text-sm leading-relaxed">
-                            Accelerating regulatory success through expert strategy and compliance solutions.
+            {/* Light Material Edge Highlight */}
+            <div className="absolute top-0 left-0 w-full h-px bg-white shadow-sm" />
+
+            {/* Subtle paper-like gradient to give surface direction */}
+            <div className="absolute inset-0 bg-gradient-to-br from-white/80 via-transparent to-gray-200/50 pointer-events-none opacity-50" />
+
+            {/* Editorial Margin Guides */}
+            <div className="absolute inset-0 pointer-events-none container mx-auto px-4 lg:px-8 border-x border-gray-900/[0.03]">
+                <div className="absolute top-0 bottom-0 left-12 w-px bg-gray-900/[0.03]" />
+                <div className="absolute top-0 bottom-0 right-12 w-px bg-gray-900/[0.03]" />
+            </div>
+
+            <div className="container mx-auto px-4 lg:px-8 py-32 pt-64 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-4 gap-12 lg:gap-20 items-start">
+
+                    {/* Column 1: Identity & Scope */}
+                    <div className="space-y-8">
+                        <Link href="/" className="inline-block group">
+                            <span className="text-3xl font-serif font-bold text-primary-navy tracking-tight">
+                                Mevoq<span className="text-primary-teal">.</span>
+                            </span>
+                        </Link>
+                        <p className="text-gray-600 text-sm leading-relaxed max-w-xs font-light">
+                            Strategic regulatory consulting for pharmaceutical and biotechnology companies. We navigate global health authorities to accelerate life-saving therapies.
                         </p>
+                        <div className="text-xs text-gray-500 font-medium">
+                            &copy; {currentYear} Mevoq vs.
+                        </div>
                     </div>
 
-                    {/* Quick Links */}
-                    <div>
-                        <h4 className="font-semibold mb-4 text-white">Services</h4>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li><a href="#" className="hover:text-primary-teal transition-colors">Regulatory Strategy</a></li>
-                            <li><a href="#" className="hover:text-primary-teal transition-colors">IND/NDA Submissions</a></li>
-                            <li><a href="#" className="hover:text-primary-teal transition-colors">Compliance Audits</a></li>
+                    {/* Column 2: Practice Areas */}
+                    <div className="space-y-8">
+                        <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-primary-navy/40">Practice Areas</h4>
+                        <ul className="space-y-4 text-sm text-gray-600 font-light">
+                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">Regulatory Strategy</Link></li>
+                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">FDA & EMA Submissions</Link></li>
+                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">Clinical Development</Link></li>
+                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">Post-Market Compliance</Link></li>
                         </ul>
                     </div>
 
-                    {/* Company */}
-                    <div>
-                        <h4 className="font-semibold mb-4 text-white">Company</h4>
-                        <ul className="space-y-2 text-sm text-gray-400">
-                            <li><a href="/about" className="hover:text-primary-teal transition-colors">About Us</a></li>
-                            <li><a href="/blog" className="hover:text-primary-teal transition-colors">Insights</a></li>
-                            <li><a href="/contact" className="hover:text-primary-teal transition-colors">Contact</a></li>
+                    {/* Column 3: Company */}
+                    <div className="space-y-8">
+                        <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-primary-navy/40">Company</h4>
+                        <ul className="space-y-4 text-sm text-gray-600 font-light">
+                            <li><Link href="/about" className="hover:text-primary-navy transition-colors duration-300">About Mevoq</Link></li>
+                            <li><Link href="/blog" className="hover:text-primary-navy transition-colors duration-300">Regulatory Insights</Link></li>
+                            <li><Link href="/contact" className="hover:text-primary-navy transition-colors duration-300">Careers</Link></li>
+                            <li><Link href="/contact" className="hover:text-primary-navy transition-colors duration-300">Contact</Link></li>
                         </ul>
                     </div>
 
-                    {/* Contact */}
-                    <div>
-                        <h4 className="font-semibold mb-4 text-white">Contact</h4>
-                        <p className="text-sm text-gray-400 mb-2">contact@mevoq.com</p>
-                        <p className="text-sm text-gray-400 mb-4">+1 (555) 123-4567</p>
-                        <div className="flex gap-4">
-                            {/* Social Placeholders */}
-                            <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-primary transition-colors"></div>
-                            <div className="w-8 h-8 bg-gray-800 rounded-full hover:bg-primary transition-colors"></div>
+                    {/* Column 4: Legal & Governance */}
+                    <div className="space-y-8">
+                        <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-primary-navy/40">Governance</h4>
+
+                        <div className="space-y-6 text-sm text-gray-600 font-light">
+                            <div className="flex gap-4 items-start opacity-80">
+                                <MapPin className="w-4 h-4 text-gray-400 shrink-0 mt-1" strokeWidth={1.5} />
+                                <span className="leading-relaxed">
+                                    One International Place<br />
+                                    Boston, MA 02110<br />
+                                    United States
+                                </span>
+                            </div>
+                            <div className="flex gap-4 items-center opacity-80">
+                                <Mail className="w-4 h-4 text-gray-400 shrink-0" strokeWidth={1.5} />
+                                <a href="mailto:consult@mevoq.com" className="hover:text-primary-navy transition-colors">consult@mevoq.com</a>
+                            </div>
+                            <div className="flex gap-4 items-center opacity-80">
+                                <Phone className="w-4 h-4 text-gray-400 shrink-0" strokeWidth={1.5} />
+                                <span>+1 (617) 555-0123</span>
+                            </div>
+                        </div>
+
+                        <div className="pt-8 border-t border-gray-200/50 space-y-3">
+                            <Link href="/legal/privacy" className="block text-xs text-gray-400 hover:text-primary-navy transition-colors">Privacy Policy</Link>
+                            <Link href="/legal/terms" className="block text-xs text-gray-400 hover:text-primary-navy transition-colors">Terms of Engagement</Link>
+                            <Link href="/legal/disclaimer" className="block text-xs text-gray-400 hover:text-primary-navy transition-colors">Regulatory Disclaimer</Link>
                         </div>
                     </div>
                 </div>
 
-                <div className="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-gray-500">
-                    <p>&copy; {currentYear} Mevoq Pharmaceutical Consulting. All rights reserved.</p>
-                    <div className="flex gap-6">
-                        <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                        <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-                    </div>
-                </div>
+                {/* Bottom Landing Zone */}
+                <div className="h-32"></div>
             </div>
         </footer>
     );
