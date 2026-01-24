@@ -3,21 +3,31 @@ import { cookies } from 'next/headers';
 import { cache } from 'react';
 import { mockBlogPosts, mockServices, mockTestimonials, mockTeam, mockStats } from './mock-data';
 
-// 1. Singleton Public Client (No cookies/auth session required, supports SSG)
-const publicClient = createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-    {
-        cookies: {
-            getAll() { return []; },
-            setAll(cookiesToSet) { },
-        },
+// Check if credentials exist
+const isConfigured = !!(process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
+
+// 1. Lazy Public Client (Prevents build-time crashes if ENVs are missing)
+let _publicClient = null;
+const getPublicClient = () => {
+    if (!isConfigured) return null;
+    if (!_publicClient) {
+        _publicClient = createServerClient(
+            process.env.NEXT_PUBLIC_SUPABASE_URL,
+            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+            {
+                cookies: {
+                    getAll() { return []; },
+                    setAll(cookiesToSet) { },
+                },
+            }
+        );
     }
-);
+    return _publicClient;
+};
 
 // Client for User Actions (Requires cookies, opts into Dynamic Rendering)
 // Use this if you need to respect RLS policies based on the logged-in user
-const createSessionClient = async () => {
+export const createSessionClient = async () => {
     const cookieStore = await cookies();
 
     return createServerClient(
@@ -42,9 +52,6 @@ const createSessionClient = async () => {
     );
 };
 
-// Check if credentials exist
-const isConfigured = process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
 // Stats
 export const getStats = cache(() => {
     return mockStats;
@@ -54,8 +61,8 @@ export const getStats = cache(() => {
 export const getTestimonials = cache(async () => {
     if (isConfigured) {
         try {
-            // Using public client for static content queries to enable SSG
-            const supabase = createPublicClient();
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
             const { data, error } = await supabase
                 .from('testimonials')
                 .select('*');
@@ -77,7 +84,8 @@ export const getTestimonials = cache(async () => {
 export const getServices = cache(async () => {
     if (isConfigured) {
         try {
-            const supabase = publicClient;
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
             const { data, error } = await supabase
                 .from('services')
                 .select('*');
@@ -99,7 +107,8 @@ export const getServices = cache(async () => {
 export const getTeam = cache(async () => {
     if (isConfigured) {
         try {
-            const supabase = publicClient;
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
             const { data, error } = await supabase
                 .from('team')
                 .select('*');
@@ -121,7 +130,9 @@ export const getTeam = cache(async () => {
 export const getBlogPosts = cache(async (publishedOnly = true) => {
     if (isConfigured) {
         try {
-            const supabase = publicClient;
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
+
             let query = supabase
                 .from('blog_posts')
                 .select('*')
@@ -149,7 +160,9 @@ export const getBlogPosts = cache(async (publishedOnly = true) => {
 export const getBlogPost = cache(async (slug) => {
     if (isConfigured) {
         try {
-            const supabase = publicClient;
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
+
             const { data, error } = await supabase
                 .from('blog_posts')
                 .select('*')
@@ -174,11 +187,12 @@ export const getBlogPost = cache(async (slug) => {
 });
 
 // Contacts
-// Using public client for submission (assumes public insert access)
 export const submitContact = async (contactData) => {
     if (isConfigured) {
         try {
-            const supabase = publicClient;
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
+
             const { data, error } = await supabase
                 .from('contacts')
                 .insert([{
