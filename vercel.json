@@ -1,5 +1,0 @@
-{
-  "framework": "nextjs",
-  "buildCommand": "cd mevoq-nextjs && npm install && npm run build",
-  "outputDirectory": "mevoq-nextjs/.next"
-}
