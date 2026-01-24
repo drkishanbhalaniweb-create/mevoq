@@ -3,6 +3,8 @@
 # IDE and editors
 .idea/
 .vscode/
+.agent/
+.agents/
 
 # Dependencies
 node_modules/
