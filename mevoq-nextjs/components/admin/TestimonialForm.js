@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Loader2, Save, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { createTestimonial, updateTestimonial } from '@/app/admin/actions/testimonials';
+import { uploadContentImage } from '@/app/admin/actions/upload';
 import Link from 'next/link';
+import RichTextEditor from './RichTextEditor';
 
 export default function TestimonialForm({ testimonial }) {
     const router = useRouter();
@@ -17,6 +19,21 @@ export default function TestimonialForm({ testimonial }) {
     const [company, setCompany] = useState(testimonial?.company || '');
     const [content, setContent] = useState(testimonial?.content || '');
     const [avatarUrl, setAvatarUrl] = useState(testimonial?.avatar_url || '');
+
+    // Handler for uploading images in the content editor
+    const handleContentImageUpload = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const result = await uploadContentImage(formData);
+
+        if (result.error) {
+            toast.error(result.error);
+            throw new Error(result.error);
+        }
+
+        return result.url;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -117,14 +134,12 @@ export default function TestimonialForm({ testimonial }) {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Testimonial Content</label>
-                    <textarea
-                        name="content"
+                    <RichTextEditor
                         value={content}
-                        onChange={(e) => setContent(e.target.value)}
-                        rows={4}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                        onChange={setContent}
                         placeholder="What did the client say?"
+                        onImageUpload={handleContentImageUpload}
+                        minHeight={120}
                     />
                 </div>
 

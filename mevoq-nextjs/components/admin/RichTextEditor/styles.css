@@ -1,0 +1,119 @@
+/* Rich Text Editor Styles */
+
+.rich-text-editor {
+    @apply border border-gray-300 rounded-lg overflow-hidden bg-white;
+}
+
+.rich-text-editor:focus-within {
+    @apply ring-2 ring-indigo-500 border-indigo-500;
+}
+
+/* Toolbar Styles */
+.editor-toolbar {
+    @apply flex flex-wrap items-center gap-1 p-2 border-b border-gray-200 bg-gray-50;
+}
+
+.toolbar-button {
+    @apply p-2 rounded hover:bg-gray-200 text-gray-600 transition-colors;
+}
+
+.toolbar-button.is-active {
+    @apply bg-indigo-100 text-indigo-700;
+}
+
+.toolbar-button:disabled {
+    @apply opacity-50 cursor-not-allowed;
+}
+
+.toolbar-divider {
+    @apply w-px h-6 bg-gray-300 mx-1;
+}
+
+/* Editor Content Area */
+.editor-content {
+    @apply p-4 min-h-[200px] outline-none;
+}
+
+.editor-content.prose {
+    @apply max-w-none;
+}
+
+/* Placeholder */
+.editor-content p.is-editor-empty:first-child::before {
+    @apply text-gray-400 float-left h-0 pointer-events-none;
+    content: attr(data-placeholder);
+}
+
+/* Image Styles in Editor */
+.editor-content img {
+    @apply max-w-full h-auto rounded-lg my-4 mx-auto;
+}
+
+.editor-content img.ProseMirror-selectednode {
+    @apply ring-2 ring-indigo-500;
+}
+
+/* Link Styles */
+.editor-content a {
+    @apply text-indigo-600 underline hover:text-indigo-800;
+}
+
+/* Lists */
+.editor-content ul {
+    @apply list-disc pl-6 my-2;
+}
+
+.editor-content ol {
+    @apply list-decimal pl-6 my-2;
+}
+
+.editor-content li {
+    @apply my-1;
+}
+
+/* Headings */
+.editor-content h1 {
+    @apply text-3xl font-bold mt-6 mb-4;
+}
+
+.editor-content h2 {
+    @apply text-2xl font-bold mt-5 mb-3;
+}
+
+.editor-content h3 {
+    @apply text-xl font-semibold mt-4 mb-2;
+}
+
+/* Paragraphs */
+.editor-content p {
+    @apply my-2;
+}
+
+/* Image Upload Modal Styles */
+.image-modal-overlay {
+    @apply fixed inset-0 bg-black/50 flex items-center justify-center z-50;
+}
+
+.image-modal-content {
+    @apply bg-white rounded-xl shadow-2xl w-full max-w-md p-6 m-4;
+}
+
+.image-modal-tabs {
+    @apply flex border-b border-gray-200 mb-4;
+}
+
+.image-modal-tab {
+    @apply px-4 py-2 text-sm font-medium text-gray-600 border-b-2 border-transparent;
+}
+
+.image-modal-tab.active {
+    @apply text-indigo-600 border-indigo-600;
+}
+
+.image-upload-zone {
+    @apply border-2 border-dashed border-gray-300 rounded-lg p-8 text-center hover:bg-gray-50 transition-colors cursor-pointer;
+}
+
+.image-upload-zone.dragging {
+    @apply border-indigo-500 bg-indigo-50;
+}

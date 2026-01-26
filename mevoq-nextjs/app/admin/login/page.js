@@ -2,26 +2,28 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createBrowserClient } from '@supabase/ssr';
+import { useSupabaseBrowser } from '@/lib/useSupabaseBrowser';
 import { Loader2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 export default function LoginPage() {
     const router = useRouter();
+    const { supabase, isLoading: isClientLoading } = useSupabaseBrowser();
     const [loading, setLoading] = useState(false);
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
 
     const handleLogin = async (e) => {
         e.preventDefault();
+        
+        if (!supabase) {
+            toast.error('Authentication system not ready. Please try again.');
+            return;
+        }
+
         setLoading(true);
 
         try {
-            const supabase = createBrowserClient(
-                process.env.NEXT_PUBLIC_SUPABASE_URL,
-                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-            );
-
             const { error } = await supabase.auth.signInWithPassword({
                 email,
                 password,
@@ -86,11 +88,14 @@ export default function LoginPage() {
                     <div>
                         <button
                             type="submit"
-                            disabled={loading}
+                            disabled={loading || isClientLoading || !supabase}
                             className="group relative flex w-full justify-center rounded-md bg-indigo-600 px-3 py-3 text-sm font-semibold text-white hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
                         >
-                            {loading ? (
-                                <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                            {loading || isClientLoading ? (
+                                <>
+                                    <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                                    {isClientLoading ? 'Initializing...' : 'Signing in...'}
+                                </>
                             ) : (
                                 "Sign in"
                             )}

@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { Menu, X } from 'lucide-react';
 
-// Data Model (Services, Insights, Company)
+// Data Model (Services, Insights, Company, Testimonials)
 const NAV_DATA = {
     Services: {
         id: '01',
@@ -30,8 +30,18 @@ const NAV_DATA = {
             { label: 'Regulatory Updates', href: '/blog' },
         ]
     },
-    Company: { // Internally maps to About
+    Testimonials: {
         id: '03',
+        label: 'Testimonials',
+        href: '/testimonials',
+        description: 'What our clients say about working with Mevoq.',
+        links: [
+            { label: 'Client Stories', href: '/testimonials' },
+            { label: 'Success Cases', href: '/testimonials' },
+        ]
+    },
+    Company: { // Internally maps to About
+        id: '04',
         label: 'Company',
         href: '/about',
         description: 'Operational philosophy and leadership structure.',

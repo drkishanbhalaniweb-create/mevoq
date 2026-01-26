@@ -1,6 +1,7 @@
 import { getBlogPost, getBlogPosts } from '@/lib/supabase';
 import { notFound } from 'next/navigation';
 import Image from 'next/image';
+import DOMPurify from 'isomorphic-dompurify';
 
 export const revalidate = 3600;
 
@@ -56,6 +57,12 @@ export default async function BlogPost({ params }) {
         day: 'numeric',
     });
 
+    // Sanitize HTML content for safe rendering
+    const sanitizedContent = DOMPurify.sanitize(post.content || '', {
+        ALLOWED_TAGS: ['h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'p', 'strong', 'em', 'ul', 'ol', 'li', 'a', 'img', 'blockquote', 'code', 'pre', 'br'],
+        ALLOWED_ATTR: ['href', 'src', 'alt', 'title', 'target', 'rel', 'loading', 'class']
+    });
+
     return (
         <article className="container mx-auto px-4 py-12 max-w-4xl">
             <header className="mb-12 text-center">
@@ -91,11 +98,11 @@ export default async function BlogPost({ params }) {
                 </div>
             )}
 
-            <div className="prose prose-lg prose-blue mx-auto max-w-none">
-                <div className="whitespace-pre-wrap text-gray-700 leading-relaxed space-y-6">
-                    {post.content}
-                </div>
-            </div>
+            {/* Semantic HTML content rendered safely */}
+            <div
+                className="prose prose-lg prose-blue mx-auto max-w-none prose-headings:text-gray-900 prose-p:text-gray-700 prose-a:text-indigo-600 prose-strong:text-gray-900 prose-img:rounded-xl prose-img:shadow-lg"
+                dangerouslySetInnerHTML={{ __html: sanitizedContent }}
+            />
 
             {post.tags && post.tags.length > 0 && (
                 <section className="mt-16 pt-8 border-t border-gray-200">

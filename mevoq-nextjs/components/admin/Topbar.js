@@ -1,21 +1,21 @@
 'use client';
 
 import { LogOut, Menu } from 'lucide-react';
-import { createBrowserClient } from '@supabase/ssr';
+import { useSupabaseBrowser } from '@/lib/useSupabaseBrowser';
 import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 
 const Topbar = () => {
     const router = useRouter();
+    const { supabase } = useSupabaseBrowser();
 
     const handleLogout = async () => {
-        try {
-            // We need to create a client just for this action if not passed down
-            const supabase = createBrowserClient(
-                process.env.NEXT_PUBLIC_SUPABASE_URL,
-                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-            );
+        if (!supabase) {
+            toast.error('Authentication system not ready. Please try again.');
+            return;
+        }
 
+        try {
             const { error } = await supabase.auth.signOut();
             if (error) throw error;
 
@@ -42,7 +42,8 @@ const Topbar = () => {
             <div className="flex items-center gap-4">
                 <button
                     onClick={handleLogout}
-                    className="flex items-center gap-2 text-sm text-gray-700 hover:text-red-600 px-3 py-2 rounded-md hover:bg-red-50 transition-colors"
+                    disabled={!supabase}
+                    className="flex items-center gap-2 text-sm text-gray-700 hover:text-red-600 px-3 py-2 rounded-md hover:bg-red-50 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                     <LogOut size={16} />
                     <span>Logout</span>

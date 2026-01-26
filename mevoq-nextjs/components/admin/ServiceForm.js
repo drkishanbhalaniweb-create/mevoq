@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Loader2, Save, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { createService, updateService } from '@/app/admin/actions/services';
+import { uploadContentImage } from '@/app/admin/actions/upload';
 import Link from 'next/link';
-
+import RichTextEditor from './RichTextEditor';
 export default function ServiceForm({ service }) {
     const router = useRouter();
     const [loading, setLoading] = useState(false);
@@ -22,6 +23,21 @@ export default function ServiceForm({ service }) {
             : ''
     );
     const [caseStudySnippet, setCaseStudySnippet] = useState(service?.case_study_snippet || '');
+
+    // Handler for uploading images in the content editor
+    const handleContentImageUpload = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const result = await uploadContentImage(formData);
+
+        if (result.error) {
+            toast.error(result.error);
+            throw new Error(result.error);
+        }
+
+        return result.url;
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -117,14 +133,12 @@ export default function ServiceForm({ service }) {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                    <textarea
-                        name="description"
+                    <RichTextEditor
                         value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                        rows={3}
-                        required
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                        onChange={setDescription}
                         placeholder="Brief description of the service..."
+                        onImageUpload={handleContentImageUpload}
+                        minHeight={150}
                     />
                 </div>
 
@@ -143,13 +157,12 @@ export default function ServiceForm({ service }) {
 
                 <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Case Study Snippet</label>
-                    <textarea
-                        name="case_study_snippet"
+                    <RichTextEditor
                         value={caseStudySnippet}
-                        onChange={(e) => setCaseStudySnippet(e.target.value)}
-                        rows={2}
-                        className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                        onChange={setCaseStudySnippet}
                         placeholder="Optional success story snippet..."
+                        onImageUpload={handleContentImageUpload}
+                        minHeight={100}
                     />
                 </div>
             </div>

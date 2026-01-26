@@ -1,10 +1,11 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { ArrowRight, CheckCircle2, ShieldCheck, Globe2, FileText, Activity } from 'lucide-react';
-import { getServices, getStats, getBlogPosts } from '@/lib/supabase';
+import { getServices, getStats, getBlogPosts, getTestimonials } from '@/lib/supabase';
 import HeroBackground from '@/app/components/HeroBackground';
 import ApproachSteps from '@/app/components/ApproachSteps';
 import AnimatedCounter from '@/app/components/AnimatedCounter';
+import TestimonialsSection from '@/app/components/TestimonialsSection';
 
 import RegulatorySystemCanvas from '@/app/components/RegulatorySystemCanvas';
 
@@ -27,6 +28,7 @@ export default async function Home() {
   const services = await getServices();
   const stats = getStats();
   const posts = await getBlogPosts(true); // Limit to top insights
+  const testimonials = await getTestimonials();
 
   // Feature Flag: Toggle between variants
   // Variants: 'default' | 'case-file' | 'systems-engineering'
@@ -348,6 +350,11 @@ export default async function Home() {
           </div>
         </section>
       )}
+
+      {/* ============================================
+          TESTIMONIALS (Social Proof)
+          ============================================ */}
+      <TestimonialsSection testimonials={testimonials} />
 
       {/* ============================================
           REGULATORY INSIGHTS (Blog)

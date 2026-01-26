@@ -5,7 +5,9 @@ import { useRouter } from 'next/navigation';
 import { Loader2, Save, Upload, X, ArrowLeft } from 'lucide-react';
 import { toast } from 'sonner';
 import { createPost, updatePost, uploadImage } from '@/app/admin/actions/blog';
+import { uploadContentImage } from '@/app/admin/actions/upload';
 import Link from 'next/link';
+import RichTextEditor from './RichTextEditor';
 
 export default function BlogForm({ post }) {
     const router = useRouter();
@@ -62,6 +64,21 @@ export default function BlogForm({ post }) {
         } finally {
             setUploading(false);
         }
+    };
+
+    // Handler for uploading images in the content editor
+    const handleContentImageUpload = async (file) => {
+        const formData = new FormData();
+        formData.append('file', file);
+
+        const result = await uploadContentImage(formData);
+
+        if (result.error) {
+            toast.error(result.error);
+            throw new Error(result.error);
+        }
+
+        return result.url;
     };
 
     const handleSubmit = async (e) => {
@@ -175,15 +192,13 @@ export default function BlogForm({ post }) {
                         </div>
 
                         <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">Content (Markdown)</label>
-                            <textarea
-                                name="content"
+                            <label className="block text-sm font-medium text-gray-700 mb-1">Content</label>
+                            <RichTextEditor
                                 value={content}
-                                onChange={(e) => setContent(e.target.value)}
-                                rows={15}
-                                required
-                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all font-mono text-sm"
-                                placeholder="# Header&#10;&#10;Write your content here..."
+                                onChange={setContent}
+                                placeholder="Start writing your post content..."
+                                onImageUpload={handleContentImageUpload}
+                                minHeight={300}
                             />
                         </div>
                     </div>

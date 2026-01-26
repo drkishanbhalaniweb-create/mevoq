@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, FileText, Briefcase, Users, Settings } from 'lucide-react';
+import { LayoutDashboard, FileText, Briefcase, Users, Settings, MessageSquare } from 'lucide-react';
 import { cn } from '@/lib/utils'; // Assuming standard shadcn utils exist, or I will inline standard clsx
 
 const Sidebar = () => {
@@ -23,6 +23,11 @@ const Sidebar = () => {
             href: '/admin/services',
             label: 'Services',
             icon: Briefcase,
+        },
+        {
+            href: '/admin/testimonials',
+            label: 'Testimonials',
+            icon: MessageSquare,
         },
         {
             href: '/admin/contacts',
