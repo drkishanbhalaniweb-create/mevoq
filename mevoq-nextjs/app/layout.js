@@ -5,12 +5,16 @@ const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-inter',
+  preload: true,
+  fallback: ['system-ui', 'arial'],
 });
 
 const sourceSerif = Source_Serif_4({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-source-serif',
+  preload: true,
+  fallback: ['Georgia', 'serif'],
 });
 
 export const metadata = {

@@ -62,134 +62,136 @@ export default function TestimonialsSection({ testimonials = [] }) {
 
     return (
         <section
-            className="py-32 bg-white border-y border-gray-100 relative overflow-hidden"
+            className="py-24 md:py-32 bg-gray-50 border-y border-gray-200/50 relative overflow-hidden"
             onMouseEnter={() => setIsPaused(true)}
             onMouseLeave={() => setIsPaused(false)}
         >
-            <div className="container px-4 mx-auto lg:px-8">
+            {/* Background Decorations */}
+            <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+                <div className="absolute top-20 left-10 w-64 h-64 bg-primary-teal/5 rounded-full blur-3xl mix-blend-multiply" />
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-primary-navy/5 rounded-full blur-3xl mix-blend-multiply" />
+            </div>
+
+            <div className="container px-4 mx-auto lg:px-8 relative z-10">
                 {/* Section Header */}
-                <div className="flex flex-col md:flex-row justify-between items-baseline mb-20 gap-6">
+                <div className="flex flex-col md:flex-row justify-between items-end mb-16 md:mb-24 gap-6">
                     <div>
-                        <span className="font-mono text-[10px] font-bold text-primary-teal uppercase tracking-[0.25em] block mb-4">
-                            Client Testimonials
-                        </span>
-                        <h2 className="font-serif text-4xl md:text-5xl text-primary-navy">
-                            Trusted Partnerships
+                        <div className="flex items-center gap-3 mb-4">
+                            <div className="h-px w-8 bg-primary-teal" />
+                            <span className="font-mono text-xs font-bold text-primary-teal uppercase tracking-widest">
+                                Client Testimonials
+                            </span>
+                        </div>
+                        <h2 className="font-serif text-4xl md:text-5xl lg:text-6xl text-primary-navy leading-tight">
+                            Trusted <span className="text-primary-teal">Partnerships</span>
                         </h2>
                     </div>
-                    <p className="text-gray-500 max-w-sm text-sm leading-relaxed">
-                        Perspectives from regulatory leaders who have partnered with Mevoq on complex submissions.
-                    </p>
+                    <div className="max-w-md">
+                        <p className="text-gray-500 text-sm md:text-base leading-relaxed border-l-2 border-gray-200 pl-6">
+                            Perspectives from regulatory leaders who have partnered with Mevoq on complex submissions.
+                        </p>
+                    </div>
                 </div>
 
                 {/* Testimonial Content */}
-                <div className="max-w-5xl mx-auto relative">
-                    {/* Quote Icon */}
-                    <div className="absolute -top-4 -left-4 md:-left-12 opacity-10">
-                        <Quote className="w-20 h-20 md:w-32 md:h-32 text-primary-teal" />
-                    </div>
-
+                <div className="max-w-6xl mx-auto relative">
                     {/* Main Testimonial Card */}
                     <div
                         className={`
-                            bg-gradient-to-br from-gray-50 to-white 
-                            border border-gray-100 
-                            p-8 md:p-12 lg:p-16 
-                            relative z-10
-                            transition-all duration-500 ease-out
-                            ${isAnimating ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}
+                            bg-white
+                            rounded-[2rem]
+                            shadow-[0_20px_50px_rgba(0,0,0,0.04)]
+                            p-8 md:p-12 lg:p-20
+                            relative
+                            transition-all duration-700 ease-out
+                            ${isAnimating ? 'opacity-0 scale-[0.98]' : 'opacity-100 scale-100'}
                         `}
                     >
-                        {/* Content */}
-                        <blockquote className="mb-10">
-                            <p className="font-serif text-xl md:text-2xl lg:text-3xl text-primary-navy leading-relaxed">
-                                "{currentTestimonial.content}"
-                            </p>
-                        </blockquote>
+                        {/* Quote Decor */}
+                        <Quote className="absolute top-8 left-8 md:top-12 md:left-12 w-12 h-12 md:w-16 md:h-16 text-primary-teal/10 rotate-180" />
 
-                        {/* Author */}
-                        <div className="flex items-center gap-6">
-                            {/* Avatar */}
-                            {currentTestimonial.avatar_url ? (
-                                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full overflow-hidden border-2 border-gray-100 flex-shrink-0">
-                                    <img
-                                        src={currentTestimonial.avatar_url}
-                                        alt={currentTestimonial.name}
-                                        className="w-full h-full object-cover"
-                                    />
-                                </div>
-                            ) : (
-                                <div className="w-14 h-14 md:w-16 md:h-16 rounded-full bg-gradient-to-br from-primary-teal/20 to-primary-navy/10 flex items-center justify-center flex-shrink-0">
-                                    <span className="font-serif text-xl md:text-2xl text-primary-navy font-bold">
-                                        {currentTestimonial.name?.charAt(0) || 'M'}
-                                    </span>
-                                </div>
-                            )}
+                        <div className="relative z-10 flex flex-col items-start gap-10 md:gap-14">
+                            <blockquote className="max-w-4xl relative">
+                                <p className="font-serif text-2xl md:text-3xl lg:text-4xl text-primary-navy leading-normal md:leading-relaxed indent-8 md:indent-12">
+                                    {currentTestimonial.content}
+                                </p>
+                            </blockquote>
 
-                            {/* Name & Role */}
-                            <div>
-                                <div className="font-bold text-primary-navy text-lg">
-                                    {currentTestimonial.name}
-                                </div>
-                                <div className="text-gray-500 text-sm">
-                                    {currentTestimonial.role}
-                                    {currentTestimonial.company && (
-                                        <span className="text-primary-teal"> · {currentTestimonial.company}</span>
+                            <div className="w-full flex flex-col md:flex-row md:items-center justify-between gap-8 border-t border-gray-100 pt-10">
+                                {/* Author */}
+                                <div className="flex items-center gap-5">
+                                    {currentTestimonial.avatar_url ? (
+                                        <div className="w-16 h-16 md:w-18 md:h-18 rounded-full overflow-hidden ring-4 ring-gray-50 shadow-sm">
+                                            <img
+                                                src={currentTestimonial.avatar_url}
+                                                alt={currentTestimonial.name}
+                                                className="w-full h-full object-cover"
+                                            />
+                                        </div>
+                                    ) : (
+                                        <div className="w-16 h-16 md:w-18 md:h-18 rounded-full bg-primary-teal/5 flex items-center justify-center ring-4 ring-gray-50 text-primary-teal font-serif text-2xl font-bold">
+                                            {currentTestimonial.name?.charAt(0) || 'M'}
+                                        </div>
                                     )}
+
+                                    <div>
+                                        <div className="font-bold text-primary-navy text-lg md:text-xl">
+                                            {currentTestimonial.name}
+                                        </div>
+                                        <div className="text-gray-500 text-sm md:text-base font-medium mt-1">
+                                            {currentTestimonial.role}
+                                            {currentTestimonial.company && (
+                                                <>
+                                                    <span className="text-gray-300 mx-2">|</span>
+                                                    <span className="text-primary-teal">{currentTestimonial.company}</span>
+                                                </>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
+
+                                {/* Controls */}
+                                {testimonials.length > 1 && (
+                                    <div className="flex items-center gap-4">
+                                        <button
+                                            onClick={goToPrev}
+                                            className="group w-14 h-14 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:bg-primary-navy hover:border-primary-navy hover:text-white transition-all duration-300"
+                                            aria-label="Previous testimonial"
+                                        >
+                                            <ChevronLeft className="w-6 h-6 transform group-hover:-translate-x-0.5 transition-transform" />
+                                        </button>
+                                        <button
+                                            onClick={goToNext}
+                                            className="group w-14 h-14 flex items-center justify-center rounded-full border border-gray-200 text-gray-400 hover:bg-primary-navy hover:border-primary-navy hover:text-white transition-all duration-300"
+                                            aria-label="Next testimonial"
+                                        >
+                                            <ChevronRight className="w-6 h-6 transform group-hover:translate-x-0.5 transition-transform" />
+                                        </button>
+                                    </div>
+                                )}
                             </div>
                         </div>
-
-                        {/* Decorative Elements */}
-                        <div className="absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-tl from-primary-teal/5 to-transparent pointer-events-none" />
-                        <div className="absolute top-0 right-0 w-1 h-24 bg-gradient-to-b from-primary-teal/30 to-transparent" />
                     </div>
 
-                    {/* Navigation */}
+                    {/* Indicators (Centered Below) */}
                     {testimonials.length > 1 && (
-                        <div className="flex items-center justify-between mt-10">
-                            {/* Dots */}
-                            <div className="flex items-center gap-3">
-                                {testimonials.map((_, idx) => (
-                                    <button
-                                        key={idx}
-                                        onClick={() => goToIndex(idx)}
-                                        className={`
-                                            transition-all duration-300
-                                            ${idx === currentIndex
-                                                ? 'w-8 h-2 bg-primary-teal rounded-full'
-                                                : 'w-2 h-2 bg-gray-300 hover:bg-gray-400 rounded-full'
-                                            }
-                                        `}
-                                        aria-label={`Go to testimonial ${idx + 1}`}
-                                    />
-                                ))}
-                            </div>
-
-                            {/* Arrows */}
-                            <div className="flex items-center gap-3">
+                        <div className="flex justify-center mt-12 gap-3">
+                            {testimonials.map((_, idx) => (
                                 <button
-                                    onClick={goToPrev}
-                                    className="w-12 h-12 flex items-center justify-center border border-gray-200 text-gray-400 hover:text-primary-navy hover:border-primary-navy transition-all duration-300 rounded-sm"
-                                    aria-label="Previous testimonial"
-                                >
-                                    <ChevronLeft className="w-5 h-5" />
-                                </button>
-                                <button
-                                    onClick={goToNext}
-                                    className="w-12 h-12 flex items-center justify-center border border-gray-200 text-gray-400 hover:text-primary-navy hover:border-primary-navy transition-all duration-300 rounded-sm"
-                                    aria-label="Next testimonial"
-                                >
-                                    <ChevronRight className="w-5 h-5" />
-                                </button>
-                            </div>
+                                    key={idx}
+                                    onClick={() => goToIndex(idx)}
+                                    className={`
+                                        h-1.5 rounded-full transition-all duration-500 ease-out
+                                        ${idx === currentIndex
+                                            ? 'w-12 bg-primary-teal'
+                                            : 'w-2 bg-gray-300 hover:bg-gray-400'
+                                        }
+                                    `}
+                                    aria-label={`Go to testimonial ${idx + 1}`}
+                                />
+                            ))}
                         </div>
                     )}
-
-                    {/* Index Indicator */}
-                    <div className="absolute -bottom-2 right-0 font-mono text-[10px] text-gray-300 tracking-widest">
-                        [{String(currentIndex + 1).padStart(2, '0')}/{String(testimonials.length).padStart(2, '0')}]
-                    </div>
                 </div>
             </div>
         </section>

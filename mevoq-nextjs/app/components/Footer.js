@@ -30,10 +30,10 @@ export default function Footer() {
                             </span>
                         </Link>
                         <p className="text-gray-600 text-sm leading-relaxed max-w-xs font-light">
-                            Strategic regulatory consulting for pharmaceutical and biotechnology companies. We navigate global health authorities to accelerate life-saving therapies.
+                            Strategic regulatory consulting for pharmaceutical companies. We navigate global health authorities to accelerate life-saving therapies.
                         </p>
                         <div className="text-xs text-gray-500 font-medium">
-                            &copy; {currentYear} Mevoq vs.
+                            &copy; {currentYear} Mevoq
                         </div>
                     </div>
 
@@ -41,10 +41,12 @@ export default function Footer() {
                     <div className="space-y-8">
                         <h4 className="font-mono text-xs font-bold uppercase tracking-widest text-primary-navy/40">Practice Areas</h4>
                         <ul className="space-y-4 text-sm text-gray-600 font-light">
-                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">Regulatory Strategy</Link></li>
-                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">FDA & EMA Submissions</Link></li>
-                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">Clinical Development</Link></li>
-                            <li><Link href="/services" className="hover:text-primary-navy transition-colors duration-300">Post-Market Compliance</Link></li>
+                            <li><Link href="/services/regulatory-strategy-planning" className="hover:text-primary-navy transition-colors duration-300">Regulatory Strategy & Planning</Link></li>
+                            <li><Link href="/services/regulatory-documentation" className="hover:text-primary-navy transition-colors duration-300">Regulatory Documentation</Link></li>
+                            <li><Link href="/services/quality-compliance" className="hover:text-primary-navy transition-colors duration-300">Quality & Compliance</Link></li>
+                            <li><Link href="/services/medical-scientific-writing" className="hover:text-primary-navy transition-colors duration-300">Medical & Scientific Writing</Link></li>
+                            <li><Link href="/services/risk-management" className="hover:text-primary-navy transition-colors duration-300">Risk Management</Link></li>
+                            <li><Link href="/services/administrative-support" className="hover:text-primary-navy transition-colors duration-300">Administrative Support</Link></li>
                         </ul>
                     </div>
 
@@ -67,9 +69,7 @@ export default function Footer() {
                             <div className="flex gap-4 items-start opacity-80">
                                 <MapPin className="w-4 h-4 text-gray-400 shrink-0 mt-1" strokeWidth={1.5} />
                                 <span className="leading-relaxed">
-                                    One International Place<br />
-                                    Boston, MA 02110<br />
-                                    United States
+                                    Gujarat, India
                                 </span>
                             </div>
                             <div className="flex gap-4 items-center opacity-80">
@@ -78,7 +78,7 @@ export default function Footer() {
                             </div>
                             <div className="flex gap-4 items-center opacity-80">
                                 <Phone className="w-4 h-4 text-gray-400 shrink-0" strokeWidth={1.5} />
-                                <span>+1 (617) 555-0123</span>
+                                <span>+91 8866147937</span>
                             </div>
                         </div>
 

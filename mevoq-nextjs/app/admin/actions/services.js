@@ -53,10 +53,17 @@ export async function createService(prevState, formData) {
         ? featuresString.split('\n').map(f => f.trim()).filter(f => f.length > 0)
         : [];
 
+    const slug = formData.get('slug');
+    const content = formData.get('content');
+    const featured_image = formData.get('featured_image');
+
     const payload = {
         id: crypto.randomUUID(),
         title,
         description,
+        slug,
+        content,
+        featured_image,
         icon,
         case_study_snippet,
         features,
@@ -96,13 +103,19 @@ export async function updateService(prevState, formData) {
         ? featuresString.split('\n').map(f => f.trim()).filter(f => f.length > 0)
         : [];
 
+    const slug = formData.get('slug');
+    const content = formData.get('content');
+    const featured_image = formData.get('featured_image');
+
     const payload = {
         title,
         description,
+        slug,
+        content,
+        featured_image,
         icon,
         case_study_snippet,
         features,
-        // No updated_at field in legacy schema apparently, but strictly mapping fields used in create
     };
 
     const { error } = await supabase

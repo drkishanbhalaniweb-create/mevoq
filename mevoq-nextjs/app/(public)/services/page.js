@@ -126,7 +126,13 @@ export default async function ServicesPage() {
                                             </div>
                                         )}
 
-                                        <div className="mt-8">
+                                        <div className="mt-8 flex flex-col gap-4">
+                                            <Link
+                                                href={`/services/${service.slug || service.id}`}
+                                                className="text-[10px] font-bold uppercase tracking-[0.2em] text-primary-teal hover:translate-x-1 transition-all inline-flex items-center gap-2"
+                                            >
+                                                View Full Details <ArrowRight className="w-3 h-3" />
+                                            </Link>
                                             <Link
                                                 href="/contact"
                                                 className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0F172A] hover:translate-x-1 transition-all inline-flex items-center gap-2"

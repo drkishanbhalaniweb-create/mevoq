@@ -65,8 +65,7 @@ export default async function BlogPage() {
 
                                 <div className="mt-auto pt-6 border-t border-gray-100 flex items-center justify-between text-sm">
                                     <div className="flex flex-col">
-                                        <span className="font-semibold text-gray-900">{post.author}</span>
-                                        <span className="text-gray-500 text-xs">
+                                        <span className="text-gray-500 text-xs text-primary-navy">
                                             {new Date(post.published_at).toLocaleDateString(undefined, {
                                                 year: 'numeric',
                                                 month: 'short',

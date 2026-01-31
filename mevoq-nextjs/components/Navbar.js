@@ -13,10 +13,12 @@ const NAV_DATA = {
         href: '/services',
         description: 'Comprehensive regulatory and compliance solutions.',
         links: [
-            { label: 'Regulatory Strategy', href: '/services' },
-            { label: 'Compliance Audits', href: '/services' },
-            { label: 'Submission Support', href: '/services' },
-            { label: 'Medical Writing', href: '/services' },
+            { label: 'Regulatory Strategy & Planning', href: '/services/regulatory-strategy-planning' },
+            { label: 'Regulatory Documentation', href: '/services/regulatory-documentation' },
+            { label: 'Quality & Compliance', href: '/services/quality-compliance' },
+            { label: 'Medical & Scientific Writing', href: '/services/medical-scientific-writing' },
+            { label: 'Risk Management', href: '/services/risk-management' },
+            { label: 'Administrative Support', href: '/services/administrative-support' },
         ]
     },
     Insights: { // Internally maps to Blog
@@ -87,12 +89,12 @@ export default function Navbar() {
     // Dynamic Classes based on state
     // Refined Paddings for a balanced authority/compact feel.
     const containerClasses = isScrolled
-        ? "py-[6px] px-6 max-w-[960px] rounded-[12px]" // Compact
-        : "py-[16px] px-8 max-w-[1040px] rounded-[16px]"; // Expanded/Authority
+        ? "py-[6px] px-4 md:px-6 max-w-[960px] rounded-[12px]" // Compact
+        : "py-[16px] px-5 md:px-8 max-w-[1040px] rounded-[16px]"; // Expanded/Authority
 
     const ctaClasses = isScrolled
-        ? "py-[8px] px-5 text-[10px]"
-        : "py-[10px] px-7 text-[11px]";
+        ? "py-[8px] px-3 md:px-5 text-[10px]"
+        : "py-[10px] px-4 md:px-7 text-[11px]";
 
     // The anchor remains fixed to reserve space in the DOM flow
     const navLayoutHeight = "h-[80px]";
@@ -123,23 +125,8 @@ export default function Navbar() {
                     {/* 1. Header Strip (Visible Always) */}
                     <div className="flex items-center justify-between w-full relative z-20 bg-[#FDFCFC]">
 
-                        {/* Left: Hamburger Trigger */}
-                        <div
-                            className="flex-1 flex justify-start items-center relative z-40 h-full py-1 pr-6 cursor-pointer"
-                            onMouseEnter={() => setIsExpanded(true)}
-                            onClick={() => setIsExpanded((prev) => !prev)}
-                        >
-                            <button
-                                className="group text-gray-400 hover:text-gray-900 transition-all duration-300 focus:outline-none relative w-6 h-6"
-                                aria-label="Toggle Navigation"
-                            >
-                                <Menu className={`w-6 h-6 absolute top-0 left-0 transition-all duration-300 ${isExpanded ? 'rotate-90 opacity-0 scale-75' : 'rotate-0 opacity-100 scale-100'}`} />
-                                <X className={`w-6 h-6 absolute top-0 left-0 transition-all duration-300 ${isExpanded ? 'rotate-0 opacity-100 scale-100' : '-rotate-90 opacity-0 scale-75'}`} />
-                            </button>
-                        </div>
-
-                        {/* Center: Mevoq Wordmark */}
-                        <div className="flex-none flex justify-center items-center h-full relative z-50">
+                        {/* Mevoq Wordmark: order-1 on mobile (left), order-2 on desktop (center) */}
+                        <div className="order-1 md:order-2 flex-1 md:flex-none flex justify-start md:justify-center items-center h-full relative z-50">
                             <Link href="/" className="group block cursor-pointer" onClick={() => setIsExpanded(false)}>
                                 <span className={`
                                     font-serif font-bold text-primary-navy tracking-tight 
@@ -152,8 +139,23 @@ export default function Navbar() {
                             </Link>
                         </div>
 
-                        {/* Right: CTA */}
-                        <div className="flex-1 flex justify-end items-center z-30">
+                        {/* Hamburger Trigger: order-2 on mobile (right), order-1 on desktop (left) */}
+                        <div
+                            className="order-2 md:order-1 flex-none md:flex-1 flex justify-end md:justify-start items-center relative z-40 h-full py-1 md:pr-6 cursor-pointer"
+                            onMouseEnter={() => setIsExpanded(true)}
+                            onClick={() => setIsExpanded((prev) => !prev)}
+                        >
+                            <button
+                                className="group text-gray-400 hover:text-gray-900 transition-all duration-300 focus:outline-none relative w-6 h-6"
+                                aria-label="Toggle Navigation"
+                            >
+                                <Menu className={`w-6 h-6 absolute top-0 left-0 transition-all duration-300 ${isExpanded ? 'rotate-90 opacity-0 scale-75' : 'rotate-0 opacity-100 scale-100'}`} />
+                                <X className={`w-6 h-6 absolute top-0 left-0 transition-all duration-300 ${isExpanded ? 'rotate-0 opacity-100 scale-100' : '-rotate-90 opacity-0 scale-75'}`} />
+                            </button>
+                        </div>
+
+                        {/* CTA: Hidden on mobile, order-3 on desktop (right) */}
+                        <div className="hidden md:flex order-3 flex-1 justify-end items-center z-30">
                             <Link
                                 href="/contact"
                                 className={`
@@ -161,11 +163,12 @@ export default function Navbar() {
                                     font-bold uppercase tracking-[0.15em] text-white
                                     bg-[#0F172A] rounded-[4px] transition-all duration-300
                                     hover:bg-[#334155] hover:translate-y-[1px]
-                                    active:translate-y-[2px] active:shadow-none
+                                    active:translate-y-[2px] active:shadow-none whitespace-nowrap
                                     ${ctaClasses}
                                 `}
                             >
-                                Consult With Us
+                                <span className="hidden sm:inline">Consult With Us</span>
+                                <span className="sm:hidden">Consult</span>
                             </Link>
                         </div>
                     </div>
@@ -179,10 +182,10 @@ export default function Navbar() {
                     >
                         <div className="overflow-hidden w-full relative z-10 bg-[#FDFCFC]">
                             <div className="w-full pt-8 pb-4 border-t border-gray-100 mt-2">
-                                <div className={`grid grid-cols-12 gap-0 transition-all duration-500 delay-75 ${isExpanded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+                                <div className={`grid grid-cols-1 md:grid-cols-12 gap-0 transition-all duration-500 delay-75 ${isExpanded ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
 
-                                    {/* Column 1: Categories (Tabs) */}
-                                    <div className="col-span-3 border-r border-gray-100 pr-2 flex flex-col gap-2">
+                                    {/* Column 1: Categories (Tabs) - Horizontal Scroll on Mobile, Vertical on Desktop */}
+                                    <div className="col-span-1 md:col-span-3 border-b md:border-b-0 md:border-r border-gray-100 md:pr-2 pb-2 md:pb-0 flex flex-row md:flex-col gap-2 overflow-x-auto">
                                         {Object.keys(NAV_DATA).map((key) => {
                                             const isActive = activeTab === key;
                                             const item = NAV_DATA[key];
@@ -193,8 +196,8 @@ export default function Navbar() {
                                                     onMouseEnter={() => setActiveTab(key)}
                                                     onClick={() => setIsExpanded(false)}
                                                     className={`
-                                                    w-full text-left px-5 py-4 text-sm font-medium tracking-wide transition-all duration-200
-                                                    rounded-lg block
+                                                    w-auto md:w-full text-left px-4 py-3 md:px-5 md:py-4 text-sm font-medium tracking-wide transition-all duration-200
+                                                    rounded-lg block whitespace-nowrap flex-shrink-0
                                                     ${isActive
                                                             ? 'bg-gray-50 text-primary-navy font-bold'
                                                             : 'text-gray-400 hover:text-gray-600 hover:bg-gray-50/50'
@@ -208,19 +211,19 @@ export default function Navbar() {
                                     </div>
 
                                     {/* Column 2: Content Area */}
-                                    <div className="col-span-9 pl-10 pt-2 flex flex-col">
+                                    <div className="col-span-1 md:col-span-9 pl-0 md:pl-10 pt-6 md:pt-2 flex flex-col">
                                         {activeTab && NAV_DATA[activeTab] && (
                                             <div className="animate-in fade-in slide-in-from-right-4 duration-300 w-full" key={activeTab}>
-                                                <div className="mb-10">
+                                                <div className="mb-8 md:mb-10">
                                                     <span className="text-[10px] font-bold text-primary-teal uppercase tracking-widest block mb-3">
                                                         {NAV_DATA[activeTab].id} — {NAV_DATA[activeTab].label}
                                                     </span>
-                                                    <h3 className="text-2xl font-serif text-primary-navy max-w-md leading-tight">
+                                                    <h3 className="text-xl md:text-2xl font-serif text-primary-navy max-w-md leading-tight">
                                                         {NAV_DATA[activeTab].description}
                                                     </h3>
                                                 </div>
 
-                                                <div className="grid grid-cols-2 gap-x-16 gap-y-4 max-w-2xl">
+                                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-x-16 gap-y-4 max-w-2xl">
                                                     {NAV_DATA[activeTab].links.map((link, idx) => (
                                                         <Link
                                                             key={idx}

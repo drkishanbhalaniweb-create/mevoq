@@ -1,5 +1,8 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    // Enable compression
+    compress: true,
+
     // Image Optimization for Pharmaceutical Imagery
     // Using AVIF for best compression given the high-res nature of medical assets
     images: {
@@ -20,6 +23,10 @@ const nextConfig = {
         ],
         // Cache for 24 hours (86400 seconds)
         minimumCacheTTL: 86400,
+        // Device sizes for responsive images
+        deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048],
+        // Image sizes for different layouts
+        imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
     },
 
     // Security Headers
@@ -69,6 +76,38 @@ const nextConfig = {
     experimental: {
         // optimizePackageImports included by default for many libs in Next.js 15
         optimizePackageImports: ['lucide-react', '@radix-ui/react-icons', 'date-fns'],
+    },
+
+    // Webpack optimizations
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            // Optimize client-side bundle splitting
+            config.optimization.splitChunks = {
+                chunks: 'all',
+                cacheGroups: {
+                    default: false,
+                    vendors: false,
+                    // Group common dependencies
+                    commons: {
+                        name: 'commons',
+                        chunks: 'all',
+                        minChunks: 2,
+                    },
+                    // Separate large libraries
+                    lib: {
+                        test: /[\\/]node_modules[\\/]/,
+                        name(module) {
+                            const packageName = module.context.match(
+                                /[\\/]node_modules[\\/](.*?)([\\/]|$)/
+                            )?.[1];
+                            return `npm.${packageName?.replace('@', '')}`;
+                        },
+                        priority: 10,
+                    },
+                },
+            };
+        }
+        return config;
     },
 };
 

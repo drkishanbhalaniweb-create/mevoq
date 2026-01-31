@@ -2,9 +2,12 @@ import Link from 'next/link';
 import { Award, Users, Globe, Target, ArrowRight } from 'lucide-react';
 import OrganicVectorField from '@/app/components/OrganicVectorField';
 
+// Enable ISR - Revalidate daily
+export const revalidate = 86400;
+
 export const metadata = {
     title: 'About Mevoq | Pharmaceutical Regulatory Consulting Experts',
-    description: 'We are a team of former FDA reviewers and industry experts dedicated to accelerating drug development and global regulatory approvals.',
+    description: 'We are a team of industry experts dedicated to accelerating drug development and global regulatory approvals.',
     alternates: {
         canonical: '/about',
     },
@@ -22,7 +25,7 @@ export default function AboutPage() {
                     <div className="max-w-4xl">
                         <div className="mb-6">
                             <span className="font-mono text-[10px] font-bold text-primary-teal uppercase tracking-[0.3em] border-l-2 border-primary-teal pl-4 py-1">
-                                Institutional Background [EST. 1999]
+                                Institutional Background [EST. 2014]
                             </span>
                         </div>
                         <h1 className="text-4xl font-serif text-primary-navy sm:text-7xl mb-10 leading-[1.05]">
@@ -30,7 +33,7 @@ export default function AboutPage() {
                             <span className="italic">Regulatory Excellence.</span>
                         </h1>
                         <p className="max-w-2xl text-xl text-gray-500 leading-relaxed">
-                            We bridge the gap between scientific innovation and regulatory approval. With over 25 years of experience, Mevoq is the partner biopharma companies trust to navigate the complex path to market.
+                            We bridge the gap between scientific innovation and regulatory approval. With over 11 years of experience, Mevoq is the partner pharma companies trust to navigate the complex path to market.
                         </p>
                     </div>
                 </div>
@@ -53,7 +56,7 @@ export default function AboutPage() {
                                     At Mevoq, we believe that regulatory hurdles should never be the reason a patient waits for a cure. Our mission is to provide the strategic foresight and technical precision required to move drugs through the approval process efficiently, without compromising on safety or quality.
                                 </p>
                                 <p>
-                                    Founded by a team of former FDA reviewers and industry veterans, we bring a unique dual perspective to every project. We understand what regulators need to see, and we know the operational realities of drug development.
+                                    Founded by a team of industry veterans, we bring a unique dual perspective to every project. We understand what regulators need to see, and we know the operational realities of drug development.
                                 </p>
                             </div>
                         </div>
@@ -104,6 +107,6 @@ export default function AboutPage() {
                     </div>
                 </div>
             </section>
-        </main>
+        </main >
     );
 }

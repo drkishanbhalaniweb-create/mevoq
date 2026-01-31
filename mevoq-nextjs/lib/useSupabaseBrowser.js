@@ -1,28 +1,28 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { createBrowserClient } from '@supabase/ssr';
+
+// Singleton instance to avoid recreating client on every render
+let supabaseInstance = null;
 
 /**
  * Custom hook to create Supabase browser client at runtime
- * This ensures environment variables are available when the client is created
+ * Uses singleton pattern for performance optimization
  * 
  * @returns {Object} { supabase, isLoading }
  */
 export function useSupabaseBrowser() {
-    const [supabase, setSupabase] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
+    const [supabase] = useState(() => {
+        // Only create client once
+        if (!supabaseInstance) {
+            supabaseInstance = createBrowserClient(
+                process.env.NEXT_PUBLIC_SUPABASE_URL,
+                process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+            );
+        }
+        return supabaseInstance;
+    });
 
-    useEffect(() => {
-        // Create client at runtime (not build time)
-        // This ensures process.env values are available
-        const client = createBrowserClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL,
-            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-        );
-        setSupabase(client);
-        setIsLoading(false);
-    }, []);
-
-    return { supabase, isLoading };
+    return { supabase, isLoading: false };
 }

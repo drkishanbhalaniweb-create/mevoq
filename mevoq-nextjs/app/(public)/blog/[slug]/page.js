@@ -30,7 +30,7 @@ export async function generateMetadata({ params }) {
             description: post.excerpt,
             type: 'article',
             publishedTime: post.published_at,
-            authors: [post.author],
+            authors: ['Mevoq Team'],
             images: [
                 {
                     url: post.featured_image,
@@ -78,8 +78,6 @@ export default async function BlogPost({ params }) {
 
                 <div className="flex items-center justify-center gap-4 text-gray-600">
                     <div className="flex items-center gap-2">
-                        <span className="font-medium">{post.author}</span>
-                        <span className="text-gray-400">|</span>
                         <time dateTime={post.published_at}>{formattedDate}</time>
                     </div>
                 </div>

@@ -11,6 +11,9 @@ import RegulatorySystemCanvas from '@/app/components/RegulatorySystemCanvas';
 
 import OrganicVectorField from '@/app/components/OrganicVectorField';
 
+// Enable ISR - Revalidate every hour
+export const revalidate = 3600;
+
 // Helper for strict typography
 const SectionHeading = ({ children, className = "" }) => (
   <h2 className={`font-serif text-3xl md:text-4xl text-primary-navy mb-8 ${className}`}>
@@ -52,18 +55,18 @@ export default async function Home() {
             {/* Eyebrow */}
             <div className="mb-10 animate-fade-in">
               <span className="text-xs font-bold tracking-widest uppercase text-gray-500 border-b border-primary-teal/50 pb-1 drop-shadow-sm">
-                Former FDA Reviewers | Global Regulatory Consulting
+                Global Regulatory Consulting
               </span>
             </div>
 
             {/* Headline: Increased tension via spacing */}
             <h1 className="font-serif text-5xl md:text-6xl lg:text-7xl text-primary-navy leading-[1.1] mb-14 animate-fade-in-up [animation-delay:200ms] drop-shadow-md">
-              Navigate Drug Approvals with Experts Who Have Worked on the <span className="italic relative z-10 before:absolute before:bottom-2 before:left-0 before:w-full before:h-3 before:bg-primary-teal/20 before:-z-10">Regulatory Side</span>
+              Navigate Drug Approvals with Experts Who Deliver <span className="italic relative z-10 before:absolute before:bottom-2 before:left-0 before:w-full before:h-3 before:bg-primary-teal/20 before:-z-10">Regulatory Success</span>
             </h1>
 
             {/* Subtext: Increased breathing room */}
             <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-3xl mb-16 animate-fade-in-up [animation-delay:400ms] drop-shadow-sm">
-              Mevoq partners with pharmaceutical and biotech teams to plan and execute regulatory strategies across FDA, EMA, Health Canada, and other global authorities. We help programs move forward with clarity, confidence, and regulatory foresight.
+              Mevoq partners with pharmaceutical teams to plan and execute regulatory strategies across FDA, EMA, Health Canada, and other global authorities. We help programs move forward with clarity, confidence, and regulatory foresight.
             </p>
 
             {/* CTAs */}
@@ -101,7 +104,7 @@ export default async function Home() {
             {[
               { label: 'Successful Submissions', value: 34, unit: 'CASES' },
               { label: 'Project Weeks Saved', value: 112, unit: 'WK' },
-              { label: 'Years of Experience', value: 25, unit: 'YR' },
+              { label: 'Years of Experience', value: 11, unit: 'YR' },
               { label: 'Countries Served', value: 9, unit: 'REG' },
             ].map((stat, idx) => (
               <div key={idx} className="flex flex-col gap-4 relative group">

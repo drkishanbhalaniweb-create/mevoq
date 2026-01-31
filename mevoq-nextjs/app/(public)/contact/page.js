@@ -83,8 +83,8 @@ export default async function ContactPage(props) {
                             <div className="space-y-8">
                                 {[
                                     { label: 'Secure Email', value: 'contact@mevoq.com', icon: Mail },
-                                    { label: 'Primary Line', value: '+1 (555) 123-4567', icon: Phone },
-                                    { label: 'Operational Hub', value: 'Boston, MA — USA', icon: MapPin }
+                                    { label: 'Primary Line', value: '+91 8866147937', icon: Phone },
+                                    { label: 'Operational Hub', value: 'Gujarat, India', icon: MapPin }
                                 ].map((item, idx) => (
                                     <div key={idx} className="group">
                                         <span className="font-mono text-[9px] font-bold text-primary-teal uppercase tracking-[0.15em] block mb-2">

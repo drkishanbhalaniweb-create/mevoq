@@ -4,6 +4,9 @@ import OrganicVectorField from '@/app/components/OrganicVectorField';
 import Link from 'next/link';
 import { ArrowLeft } from 'lucide-react';
 
+// Enable ISR - Revalidate every 6 hours
+export const revalidate = 21600;
+
 export const metadata = {
     title: 'Client Stories | Mevoq Regulatory Consulting',
     description: 'Read how Mevoq has helped pharmaceutical and biotech companies navigate complex regulatory landscapes and achieve submission success.',

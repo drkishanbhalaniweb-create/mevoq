@@ -17,7 +17,7 @@ import { useEffect, useRef, useCallback } from 'react';
  */
 
 // Feature flag for easy disable
-const ENABLE_VECTOR_FIELD = true;
+const ENABLE_VECTOR_FIELD = true; // Enabled for demonstration
 
 // Curve generation - organic, asymmetric, grown-not-generated
 function generateOrganicCurves(width, height, time, variant) {

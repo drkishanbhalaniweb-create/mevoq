@@ -23,6 +23,9 @@ export default function ServiceForm({ service }) {
             : ''
     );
     const [caseStudySnippet, setCaseStudySnippet] = useState(service?.case_study_snippet || '');
+    const [slug, setSlug] = useState(service?.slug || '');
+    const [content, setContent] = useState(service?.content || '');
+    const [featuredImage, setFeaturedImage] = useState(service?.featured_image || '');
 
     // Handler for uploading images in the content editor
     const handleContentImageUpload = async (file) => {
@@ -52,6 +55,9 @@ export default function ServiceForm({ service }) {
             formData.append('icon', icon);
             formData.append('features', features);
             formData.append('case_study_snippet', caseStudySnippet);
+            formData.append('slug', slug);
+            formData.append('content', content);
+            formData.append('featured_image', featuredImage);
 
             const action = service ? updateService : createService;
 
@@ -164,6 +170,58 @@ export default function ServiceForm({ service }) {
                         onImageUpload={handleContentImageUpload}
                         minHeight={100}
                     />
+                </div>
+
+                <div className="border-t border-gray-200 pt-6 mt-6">
+                    <h3 className="text-lg font-semibold text-gray-900 mb-4">Detailed Service Page</h3>
+
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">URL Slug</label>
+                        <input
+                            type="text"
+                            name="slug"
+                            value={slug}
+                            onChange={(e) => setSlug(e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '-'))}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                            placeholder="regulatory-strategy-planning"
+                        />
+                        <p className="mt-1 text-xs text-gray-500">URL-friendly identifier (e.g., "regulatory-strategy-planning"). Auto-formatted.</p>
+                    </div>
+
+                    <div className="mb-6">
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Featured Image URL</label>
+                        <input
+                            type="url"
+                            name="featured_image"
+                            value={featuredImage}
+                            onChange={(e) => setFeaturedImage(e.target.value)}
+                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                            placeholder="https://images.unsplash.com/..."
+                        />
+                        <p className="mt-1 text-xs text-gray-500">URL for the hero image displayed on the service detail page.</p>
+                        {featuredImage && (
+                            <div className="mt-3 rounded-lg overflow-hidden border border-gray-200">
+                                <img
+                                    src={featuredImage}
+                                    alt="Featured preview"
+                                    className="w-full h-40 object-cover"
+                                    onError={(e) => e.target.style.display = 'none'}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    <div>
+                        <label className="block text-sm font-medium text-gray-700 mb-1">Detailed Content (HTML)</label>
+                        <RichTextEditor
+                            value={content}
+                            onChange={setContent}
+                            placeholder="Full page content for the service detail page..."
+                            onImageUpload={handleContentImageUpload}
+                            minHeight={300}
+                        />
+                        <p className="mt-1 text-xs text-gray-500">This content will appear on the dedicated service page.</p>
+                    </div>
                 </div>
             </div>
         </form>

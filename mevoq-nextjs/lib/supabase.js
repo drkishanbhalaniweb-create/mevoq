@@ -103,6 +103,31 @@ export const getServices = cache(async () => {
     return mockServices;
 });
 
+export const getService = cache(async (slug) => {
+    if (isConfigured) {
+        try {
+            const supabase = getPublicClient();
+            if (!supabase) throw new Error('Supabase client not initialized');
+
+            const { data, error } = await supabase
+                .from('services')
+                .select('*')
+                .eq('slug', slug)
+                .single();
+
+            if (error) throw error;
+
+            if (data) {
+                console.log('✅ Using Supabase service (single)');
+                return data;
+            }
+        } catch (error) {
+            console.warn('⚠️ Supabase unavailable/error, using mock service:', error.message);
+        }
+    }
+    return mockServices.find(s => s.slug === slug) || null;
+});
+
 // Team
 export const getTeam = cache(async () => {
     if (isConfigured) {
