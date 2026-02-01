@@ -8,6 +8,9 @@ export const revalidate = 3600;
 export const metadata = {
     title: 'Insights & Regulatory Updates',
     description: 'Latest news, guidelines, and expert perspectives on pharmaceutical regulatory affairs, FDA approvals, and compliance strategies.',
+    alternates: {
+        canonical: '/blog',
+    },
 };
 
 export default async function BlogPage() {

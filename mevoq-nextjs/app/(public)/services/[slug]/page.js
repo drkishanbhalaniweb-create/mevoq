@@ -26,6 +26,22 @@ export async function generateMetadata({ params }) {
     return {
         title: `${service.title} | Mevoq Regulatory Services`,
         description: service.description,
+        alternates: {
+            canonical: `/services/${slug}`,
+        },
+        openGraph: {
+            title: `${service.title} | Mevoq Regulatory Services`,
+            description: service.description,
+            type: 'website',
+            images: service.featured_image ? [
+                {
+                    url: service.featured_image,
+                    width: 1200,
+                    height: 630,
+                    alt: service.title,
+                }
+            ] : []
+        }
     };
 }
 
