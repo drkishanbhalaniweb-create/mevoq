@@ -77,7 +77,7 @@ values
   'regulatory-documentation',
   'file-text',
   'https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1200&q=80',
-  '["IND/NDA/BLA preparation", "CTD/eCTD compilation", "DMFs, ASMFs, CEPs, CADIFAs, etc.", "Annual reports and updates", "Labeling and package inserts"]'::jsonb,
+  '["Global DMF & ASMF Management", "CEP (EDQM) Submissions", "CADIFA (ANVISA) Compliance", "CTD/eCTD Compilation", "IND/NDA/BLA Preparation", "Annual reports and updates"]'::jsonb,
   'Created complete NDA package in 4 months vs. industry average of 8',
   '<h2>Expert Regulatory Documentation</h2>
 <p>High-quality documentation is the foundation of a successful regulatory submission. Our team of expert writers and regulatory professionals ensures that your documents are clear, concise, and compliant with all applicable guidelines.</p>
@@ -88,7 +88,14 @@ values
     <li><strong>NDAs/BLAs/MAAs:</strong> Marketing applications for US and EU markets, prepared in full compliance with current guidance.</li>
     <li><strong>Investigator Brochures:</strong> Comprehensive summaries of clinical and nonclinical data that investigators need to conduct trials safely.</li>
     <li><strong>Briefing Books:</strong> Strategic briefing documents for health authority meetings that frame discussions favorably.</li>
-    <li><strong>DMFs & ASMFs:</strong> Drug Master Files and Active Substance Master Files for drug substance and excipient manufacturers.</li>
+</ul>
+<h3>Core Expertise & Specialized Filings</h3>
+<p>Our deep technical expertise lies in the preparation and management of complex global dossiers for active substances and finished products. We specialize in:</p>
+<ul>
+    <li><strong>DMFs (Drug Master Files):</strong> Complete preparation and lifecycle management of US and Global Drug Master Files (Type II, III, IV, V), ensuring full compliance with FDA technical and administrative requirements.</li>
+    <li><strong>ASMFs (Active Substance Master Files):</strong> Expert drafting of Open and Restricted parts for European submissions, facilitating seamless coordination between manufacturers and marketing authorization holders.</li>
+    <li><strong>CEPs (Certificates of Suitability):</strong> Navigating the EDQM procedure to obtain and maintain Certificates of Suitability to the Monographs of the European Pharmacopoeia, ensuring your APIs meet rigorous EU quality standards.</li>
+    <li><strong>CADIFA (ANVISA Support):</strong> Specialized support for the Certification of Suitability of Active Pharmaceutical Ingredients in Brazil, managing the complex documentation required by ANVISA for market entry.</li>
 </ul>
 <h3>Our Documentation Process</h3>
 <p>Every project begins with a detailed kickoff meeting to understand your product, timeline, and specific requirements. We develop a documentation plan that outlines deliverables, milestones, and review cycles.</p>

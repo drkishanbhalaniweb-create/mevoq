@@ -57,7 +57,8 @@ export async function uploadContentImage(formData) {
     }
 
     const fileExt = file.name.split('.').pop();
-    const fileName = `content/${Date.now()}_${Math.random().toString(36).substring(2, 10)}.${fileExt}`;
+    const folder = formData.get('folder') || 'content';
+    const fileName = `${folder}/${Date.now()}_${Math.random().toString(36).substring(2, 10)}.${fileExt}`;
 
     const { error: uploadError } = await supabase.storage
         .from('blog-images')

@@ -55,7 +55,7 @@ export default async function ContactPage(props) {
                     <div className="mb-20">
                         <div className="mb-6">
                             <span className="font-mono text-[10px] font-bold text-primary-teal uppercase tracking-[0.3em] border-l-2 border-primary-teal pl-4 py-1">
-                                Engagement Protocol [MVQ-INTAKE-2024]
+                                Engagement Protocol [MVQ-INTAKE-2025]
                             </span>
                         </div>
                         <h1 className="text-4xl md:text-6xl font-serif text-primary-navy leading-tight mb-8">
@@ -100,7 +100,7 @@ export default async function ContactPage(props) {
 
                         {/* Submission Dossier (Form) */}
                         <div className="lg:col-span-8">
-                            <div className="bg-white p-10 md:p-16 border border-gray-100 shadow-sm rounded-sm relative">
+                            <div className="bg-white p-10 md:p-16 shadow-[0_24px_50px_-12px_rgba(0,0,0,0.1)] rounded-2xl relative border border-gray-100/50 backdrop-blur-sm">
                                 {isSubmitted ? (
                                     <div className="text-center py-20">
                                         <span className="font-mono text-[10px] font-bold text-primary-teal uppercase tracking-[0.3em] block mb-8">

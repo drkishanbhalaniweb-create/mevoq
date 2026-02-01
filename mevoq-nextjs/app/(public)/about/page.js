@@ -25,7 +25,7 @@ export default function AboutPage() {
                     <div className="max-w-4xl">
                         <div className="mb-6">
                             <span className="font-mono text-[10px] font-bold text-primary-teal uppercase tracking-[0.3em] border-l-2 border-primary-teal pl-4 py-1">
-                                Institutional Background [EST. 2014]
+                                Institutional Background [EST. 2015]
                             </span>
                         </div>
                         <h1 className="text-4xl font-serif text-primary-navy sm:text-7xl mb-10 leading-[1.05]">
@@ -68,7 +68,7 @@ export default function AboutPage() {
                                 {[
                                     { icon: Award, title: 'Uncompromising Excellence', desc: 'Clinical quality in every submission and strategy.' },
                                     { icon: Users, title: 'Direct Partnership', desc: 'We operate as an extension of your primary team.' },
-                                    { icon: Globe, title: 'Global Coverage', desc: 'Expertise across FDA, EMA, PMDA, and Health Canada.' }
+                                    { icon: Globe, title: 'Global Coverage', desc: 'Expertise across FDA, EMA, PMDA, Health Canada, and ANVISA (Brazil).' }
                                 ].map((item, idx) => (
                                     <div key={idx} className="group flex flex-col items-start">
                                         <div className="flex items-center gap-4 mb-4">

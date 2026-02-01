@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Loader2, Save, ArrowLeft } from 'lucide-react';
+import { Loader2, Save, ArrowLeft, Image as ImageIcon, Link as LinkIcon, Upload, X } from 'lucide-react';
 import { toast } from 'sonner';
 import { createService, updateService } from '@/app/admin/actions/services';
 import { uploadContentImage } from '@/app/admin/actions/upload';
@@ -26,6 +26,49 @@ export default function ServiceForm({ service }) {
     const [slug, setSlug] = useState(service?.slug || '');
     const [content, setContent] = useState(service?.content || '');
     const [featuredImage, setFeaturedImage] = useState(service?.featured_image || '');
+    const [imageInputType, setImageInputType] = useState('url'); // 'url' | 'upload'
+    const [uploading, setUploading] = useState(false);
+
+    const handleImageUpload = async (e) => {
+        const file = e.target.files?.[0];
+        if (!file) return;
+
+        // Client-side validation
+        const maxSize = 10 * 1024 * 1024; // 10MB
+        if (file.size > maxSize) {
+            toast.error('File size must be less than 10MB');
+            e.target.value = '';
+            return;
+        }
+
+        if (!file.type.startsWith('image/')) {
+            toast.error('Please upload an image file');
+            e.target.value = '';
+            return;
+        }
+
+        setUploading(true);
+        try {
+            const formData = new FormData();
+            formData.append('file', file);
+            formData.append('folder', 'services');
+
+            const result = await uploadContentImage(formData);
+
+            if (result.error) {
+                toast.error(result.error);
+            } else {
+                setFeaturedImage(result.url);
+                toast.success('Image uploaded successfully');
+            }
+        } catch (error) {
+            console.error('Upload failed:', error);
+            toast.error('Upload failed');
+        } finally {
+            setUploading(false);
+            e.target.value = ''; // Reset input to allow re-uploading same file
+        }
+    };
 
     // Handler for uploading images in the content editor
     const handleContentImageUpload = async (file) => {
@@ -190,23 +233,83 @@ export default function ServiceForm({ service }) {
 
                     <div className="mb-6">
                         <label className="block text-sm font-medium text-gray-700 mb-1">Featured Image URL</label>
-                        <input
-                            type="url"
-                            name="featured_image"
-                            value={featuredImage}
-                            onChange={(e) => setFeaturedImage(e.target.value)}
-                            className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
-                            placeholder="https://images.unsplash.com/..."
-                        />
+                        <div className="flex items-center gap-4 mb-3">
+                            <button
+                                type="button"
+                                onClick={() => setImageInputType('url')}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${imageInputType === 'url'
+                                    ? 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200'
+                                    : 'text-gray-600 hover:bg-gray-50'
+                                    }`}
+                            >
+                                <LinkIcon size={16} />
+                                <span>Image URL</span>
+                            </button>
+                            <button
+                                type="button"
+                                onClick={() => setImageInputType('upload')}
+                                className={`flex items-center gap-2 px-3 py-1.5 rounded-md text-sm font-medium transition-colors ${imageInputType === 'upload'
+                                    ? 'bg-indigo-50 text-indigo-700 ring-1 ring-indigo-200'
+                                    : 'text-gray-600 hover:bg-gray-50'
+                                    }`}
+                            >
+                                <Upload size={16} />
+                                <span>Upload Image</span>
+                            </button>
+                        </div>
+
+                        {imageInputType === 'url' ? (
+                            <input
+                                type="url"
+                                name="featured_image"
+                                value={featuredImage}
+                                onChange={(e) => setFeaturedImage(e.target.value)}
+                                className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all"
+                                placeholder="https://images.unsplash.com/..."
+                            />
+                        ) : (
+                            <div className="w-full">
+                                <label className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100 transition-colors">
+                                    <div className="flex flex-col items-center justify-center pt-5 pb-6">
+                                        {uploading ? (
+                                            <Loader2 className="w-8 h-8 text-indigo-500 animate-spin mb-2" />
+                                        ) : (
+                                            <Upload className="w-8 h-8 text-gray-400 mb-2" />
+                                        )}
+                                        <p className="mb-1 text-sm text-gray-500">
+                                            <span className="font-semibold">Click to upload</span>
+                                        </p>                                        <p className="text-xs text-gray-500">SVG, PNG, JPG or GIF (max. 10MB)</p>
+                                    </div>
+                                    <input
+                                        type="file"
+                                        className="hidden"
+                                        accept="image/*"
+                                        onChange={handleImageUpload}
+                                        disabled={uploading}
+                                    />
+                                </label>
+                            </div>
+                        )}
                         <p className="mt-1 text-xs text-gray-500">URL for the hero image displayed on the service detail page.</p>
                         {featuredImage && (
-                            <div className="mt-3 rounded-lg overflow-hidden border border-gray-200">
+                            <div className="mt-3 relative rounded-lg overflow-hidden border border-gray-200">
                                 <img
                                     src={featuredImage}
                                     alt="Featured preview"
                                     className="w-full h-40 object-cover"
                                     onError={(e) => e.target.style.display = 'none'}
                                 />
+                                <button
+                                    type="button"
+                                    onClick={() => setFeaturedImage('')}
+                                    className="absolute top-2 right-2 p-1 bg-white/80 rounded-full hover:bg-white text-gray-600 transition-colors shadow-sm"
+                                    title="Remove image"
+                                >
+                                    <X size={16} />
+                                </button>
+                                <div className="absolute bottom-2 left-2 px-2 py-1 bg-black/50 text-white text-xs rounded">
+                                    {imageInputType === 'url' ? 'External URL' : 'Uploaded Image'}
+                                </div>
                             </div>
                         )}
                     </div>

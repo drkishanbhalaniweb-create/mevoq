@@ -95,7 +95,7 @@ export default async function Home() {
           {/* Governing Editorial Label */}
           <div className="mb-14 flex items-center justify-between">
             <span className="text-[10px] font-mono font-bold uppercase tracking-[0.3em] text-gray-400 border-l-2 border-primary-teal pl-4 py-1">
-              Data Verification [REF: OPS-2024]
+              Data Verification [REF: OPS-2015]
             </span>
             <div className="flex-1 border-t border-gray-100 ml-8 opacity-50"></div>
           </div>
@@ -228,7 +228,7 @@ export default async function Home() {
                     </span>
                     <div className="w-12 h-[1px] bg-gray-200"></div>
                     <span className="font-mono text-[9px] tracking-wider text-gray-300">
-                      REF: MVQ-2024-OPS
+                      REF: MVQ-2015-OPS
                     </span>
                   </div>
                   <div className="w-2 h-2 rounded-full bg-primary-teal/40"></div>

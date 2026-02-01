@@ -56,7 +56,6 @@ export default function Footer() {
                         <ul className="space-y-4 text-sm text-gray-600 font-light">
                             <li><Link href="/about" className="hover:text-primary-navy transition-colors duration-300">About Mevoq</Link></li>
                             <li><Link href="/blog" className="hover:text-primary-navy transition-colors duration-300">Regulatory Insights</Link></li>
-                            <li><Link href="/contact" className="hover:text-primary-navy transition-colors duration-300">Careers</Link></li>
                             <li><Link href="/contact" className="hover:text-primary-navy transition-colors duration-300">Contact</Link></li>
                         </ul>
                     </div>

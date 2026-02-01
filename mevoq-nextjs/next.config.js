@@ -79,6 +79,7 @@ const nextConfig = {
     },
 
     // Webpack optimizations
+    /*
     webpack: (config, { isServer }) => {
         if (!isServer) {
             // Optimize client-side bundle splitting
@@ -109,6 +110,7 @@ const nextConfig = {
         }
         return config;
     },
+    */
 };
 
 module.exports = nextConfig;
